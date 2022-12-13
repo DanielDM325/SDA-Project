@@ -13,7 +13,7 @@ def kolmogorov_smirnov_similarity(sample_1, sample_2) -> float:
         ks_statistics = list()
         for column in sample_1.columns:
             ks_statistics.append(stats.ks_2samp(sample_1[column].values, sample_2[column].values)[0])
-        return ks_statistics
+        return np.array(ks_statistics)
     else:
         return None
 
@@ -27,7 +27,7 @@ def epps_singleton_similarity(sample_1, sample_2):
             return None
         ep_statistics = list()
         for column in sample_1.columns:
-            ep_statistics.append(stats.ep_statistic(sample_1[column].values, sample_2[column].values)[0])
-        return ep_statistics
+            ep_statistics.append(stats.epps_singleton_2samp(sample_1[column].values, sample_2[column].values)[0])
+        return np.array(ep_statistics)
     else:
         return None
