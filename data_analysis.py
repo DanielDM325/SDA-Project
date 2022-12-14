@@ -47,3 +47,13 @@ def cross_correlation_coefficient(sample_1, sample_2=None):
         return None
 
 
+def pearson_correlation_coefficient(sample_1, sample_2=None):
+    if type(sample_1) == np.ndarray and type(sample_2) == np.ndarray:
+        correlation = stats.pearsonr(sample_1, sample_2)[0]
+        return correlation
+    elif type(sample_1) == pd.DataFrame:
+        return sample_1.corr('pearson')
+    else:
+        return None
+
+
