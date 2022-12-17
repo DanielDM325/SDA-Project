@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 class LogisticRegressionClassifier:
     def __init__(self) -> None:
-        self.model = LogisticRegression(solver='sag', max_iter=5000, class_weight='balanced')
+        self.model = LogisticRegression(solver='sag', max_iter=40000, class_weight='balanced')
 
     def fit(self, X, y) -> None:
         self.model.fit(X, y)
@@ -37,7 +37,7 @@ class NaiveBayesClassifier:
 
 class KNearestNeighborsClassifier:
     def __init__(self) -> None:
-        self.model = KNeighborsClassifier
+        self.model = KNeighborsClassifier()
 
     def fit(self, X, y) -> None:
         self.model.fit(X, y)
