@@ -5,7 +5,7 @@ from sklearn.naive_bayes import GaussianNB
 
 class LogisticRegressionClassifier:
     def __init__(self) -> None:
-        self.model = LogisticRegression(solver='sag', max_iter=5000, class_weight='balanced')
+        self.model = LogisticRegression(solver='sag', max_iter=40000, class_weight='balanced')
 
     def fit(self, X, y) -> None:
         self.model.fit(X, y)
