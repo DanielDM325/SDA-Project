@@ -37,7 +37,7 @@ class NaiveBayesClassifier:
 
 class KNearestNeighborsClassifier:
     def __init__(self) -> None:
-        self.model = KNeighborsClassifier
+        self.model = KNeighborsClassifier()
 
     def fit(self, X, y) -> None:
         self.model.fit(X, y)
