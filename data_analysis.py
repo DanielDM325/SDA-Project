@@ -88,5 +88,5 @@ def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, colum
         smaller_standard_deviation = True if main_standard_deviations < standard_deviations.mean() else False
         p_value_mean = (np.count_nonzero(means < main_mean) if smaller_mean else np.count_nonzero(means > main_mean)) / iterations
         p_value_standard_deviation = (np.count_nonzero(standard_deviations < main_standard_deviations) if smaller_standard_deviation else np.count_nonzero(standard_deviations > main_standard_deviations)) / iterations
-        statistics.append((means, standard_deviations, p_value_mean, p_value_standard_deviation))
+        statistics.append((column, means, standard_deviations, p_value_mean, p_value_standard_deviation))
     return statistics
