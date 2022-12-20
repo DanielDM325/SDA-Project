@@ -69,3 +69,24 @@ def spearman_correlation_coefficient(sample_1, sample_2=None):
         return sample_1.corr('spearman')
     else:
         return None
+
+
+def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, columns=None):
+    statistics = list()
+    for column in sample.loc[:, ~sample.columns.isin(columns)].columns if columns else sample.columns:
+        main_mean = sub_sample[column].mean()
+        main_standard_deviations = sub_sample[column].std()
+        means = list()
+        standard_deviations = list()
+        for _ in range(iterations):
+            bootstrap_sample = sample[column].sample(n=size, replace=True)
+            means.append(bootstrap_sample.mean())
+            standard_deviations.append(bootstrap_sample.std())
+        means = np.array(means)
+        standard_deviations = np.array(standard_deviations)
+        smaller_mean = True if main_mean < means.mean() else False
+        smaller_standard_deviation = True if main_standard_deviations < standard_deviations.mean() else False
+        p_value_mean = (np.count_nonzero(means < main_mean) if smaller_mean else np.count_nonzero(means > main_mean)) / iterations
+        p_value_standard_deviation = (np.count_nonzero(standard_deviations < main_standard_deviations) if smaller_standard_deviation else np.count_nonzero(standard_deviations > main_standard_deviations)) / iterations
+        statistics.append((means, standard_deviations, p_value_mean, p_value_standard_deviation))
+    return statistics
