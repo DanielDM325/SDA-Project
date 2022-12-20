@@ -71,9 +71,9 @@ def spearman_correlation_coefficient(sample_1, sample_2=None):
         return None
 
 
-def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, columns=None):
+def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None):
     statistics = list()
-    for column in sample.loc[:, ~sample.columns.isin(columns)].columns if columns else sample.columns:
+    for column in sample.loc[:, ~sample.columns.isin(columns_exclude)].columns if columns_exclude else columns_include if columns_include else sample.columns:
         main_mean = sub_sample[column].mean()
         main_standard_deviations = sub_sample[column].std()
         means = list()
