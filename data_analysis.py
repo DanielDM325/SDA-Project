@@ -90,3 +90,25 @@ def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, colum
         p_value_standard_deviation = (np.count_nonzero(standard_deviations < main_standard_deviations) if smaller_standard_deviation else np.count_nonzero(standard_deviations > main_standard_deviations)) / iterations
         statistics.append((column, means, standard_deviations, p_value_mean, p_value_standard_deviation))
     return statistics
+
+
+def find_distribution(sample):
+    distribution_names = ['arcsine', 'alpha', 'beta', 'cosine', 'gamma', 'pareto', 'rayleigh', 'norm', 'lognorm', 'expon', 'dweibull']
+    distributions = [stats.arcsine, stats.alpha, stats.beta, stats.cosine, stats.gamma, stats.pareto, stats.rayleigh, stats.norm, stats.lognorm, stats.expon, stats.dweibull]
+    if type(sample) == pd.DataFrame:
+        pass
+    else:
+        mean = np.mean(sample)
+        standard_deviation = np.std(sample)
+        size = len(sample)
+        best_parameters = distributions[0].fit(sample, loc=mean, scale=standard_deviation)
+        best_ks_statistic = stats.kstest(sample, distribution_names[0], args=best_parameters)
+        best_distribition = 0
+        for d, distribution in enumerate(distributions[1:]):
+            parameters = distribution.fit(sample, loc=mean, scale=standard_deviation)
+            ks_statistic = stats.kstest(sample, distribution_names[d + 1], args=parameters)
+            if ks_statistic[0] < best_ks_statistic[0]:
+                best_ks_statistic = ks_statistic
+                best_parameters = parameters
+                best_distribition = d + 1
+        return distribution_names[best_distribition], distributions[best_distribition], best_parameters, best_ks_statistic
