@@ -102,15 +102,14 @@ def find_distribution(sample, distributions_consider: list = list()) -> tuple:
     else:
         mean = np.mean(sample)
         standard_deviation = np.std(sample)
-        size = len(sample)
-        best_parameters = distributions[0].fit(sample, loc=mean, scale=standard_deviation)
+        best_parameters = getattr(stats, distribution_names[0]).fit(sample, loc=mean, scale=standard_deviation)
         best_ks_statistic = stats.kstest(sample, distribution_names[0], args=best_parameters)
         best_distribition = 0
-        for d, distribution in enumerate(distributions[1:]):
-            parameters = distribution.fit(sample, loc=mean, scale=standard_deviation)
+        for d, distribution in enumerate(distribution_names[1:]):
+            parameters = getattr(stats, distribution).fit(sample, loc=mean, scale=standard_deviation)
             ks_statistic = stats.kstest(sample, distribution_names[d + 1], args=parameters)
             if ks_statistic[0] < best_ks_statistic[0]:
                 best_ks_statistic = ks_statistic
                 best_parameters = parameters
                 best_distribition = d + 1
-        return distribution_names[best_distribition], distributions[best_distribition], best_parameters, best_ks_statistic
+        return distribution_names[best_distribition], best_parameters, best_ks_statistic
