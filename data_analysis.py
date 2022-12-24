@@ -20,7 +20,7 @@ def kolmogorov_smirnov_similarity(sample_1, sample_2) -> float:
 
 def epps_singleton_similarity(sample_1, sample_2):
     if type(sample_1) == np.ndarray and type(sample_2) == np.ndarray:
-        ep_statistic = stats.epps_singleton_2samp(sample_1, sample_2)[0]
+        ep_statistic = stats.epps_singleton_2samp(sample_1, sample_2)
         return ep_statistic
     elif type(sample_1) == pd.DataFrame and type(sample_2) == pd.DataFrame:
         if list(sample_1.columns.values) != list(sample_2.columns.values):
@@ -28,10 +28,9 @@ def epps_singleton_similarity(sample_1, sample_2):
         ep_statistics = list()
         for column in sample_1.columns:
             try:
-                ep_statistics.append(stats.epps_singleton_2samp(sample_1[column].values, sample_2[column].values)[0])
+                ep_statistics.append(stats.epps_singleton_2samp(sample_1[column].values, sample_2[column].values))
             except np.linalg.LinAlgError:
-                ep_statistics.append(-1)
-                pass
+                ep_statistics.append([-1, -1])
         return np.array(ep_statistics)
     else:
         return None
