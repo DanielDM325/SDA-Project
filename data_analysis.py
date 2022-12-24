@@ -93,7 +93,7 @@ def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, colum
 
 def find_distribution(sample, distributions_consider: list = list()) -> tuple:
     distribution_names = ['arcsine', 'alpha', 'beta', 'cosine', 'gamma', 'pareto', 'rayleigh', 'norm', 'lognorm', 'expon', 'dweibull']
-    distributions = [stats.arcsine, stats.alpha, stats.beta, stats.cosine, stats.gamma, stats.pareto, stats.rayleigh, stats.norm, stats.lognorm, stats.expon, stats.dweibull]
+    # distribution_names = ['alpha', 'beta', 'cosine', 'gamma', 'pareto', 'rayleigh', 'norm', 'lognorm', 'dweibull']
     if distributions_consider:
         distribution_names = distributions_consider
     if type(sample) == pd.DataFrame:
