@@ -26,6 +26,7 @@ def epps_singleton_similarity(sample_1, sample_2):
         if list(sample_1.columns.values) != list(sample_2.columns.values):
             return None
         ep_statistics = list()
+        p_values = list()
         for column in sample_1.columns:
             try:
                 ep_statistics.append(stats.epps_singleton_2samp(sample_1[column].values, sample_2[column].values))
@@ -72,6 +73,8 @@ def spearman_correlation_coefficient(sample_1, sample_2=None):
 
 def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None):
     statistics = list()
+    # Select all rows for specified columns in columns_exclude, columns_include
+    # or all columns if neither are specified.
     for column in sample.loc[:, ~sample.columns.isin(columns_exclude)].columns if columns_exclude else columns_include if columns_include else sample.columns:
         main_mean = sub_sample[column].mean()
         main_standard_deviations = sub_sample[column].std()
