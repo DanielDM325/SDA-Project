@@ -22,4 +22,10 @@ def recall(test_data: pd.DataFrame, prediction_data: pd.DataFrame, for_class: in
 
 
 def f_score(precision: float, recall: float) -> float:
+    """
+    Calculates the classification recall score which is basically a harmonic
+    mean of precision and recall.
+    https://en.wikipedia.org/wiki/F-score#Diagnostic_testing
+    f = 2 / (1/recall + 1/precision)
+    """
     return 2 / (1 / precision + 1 / recall)
