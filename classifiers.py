@@ -7,6 +7,11 @@ from scipy import stats
 
 
 class LogisticRegressionClassifier:
+    """
+    A logistic regression classifier based on the module in sklearn:
+    https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+    Simply feed the data X and y into the fit method and predict using the predict method.
+    """
     def __init__(self) -> None:
         self.model = LogisticRegression(solver='sag', max_iter=100000, class_weight='balanced')
 
