@@ -13,6 +13,11 @@ def precision(test_data: pd.DataFrame, prediction_data: pd.DataFrame, for_class:
 
 
 def recall(test_data: pd.DataFrame, prediction_data: pd.DataFrame, for_class: int = 1) -> float:
+    """
+    Calculates the classification recall score
+    https://en.wikipedia.org/wiki/Precision_and_recall#Definition_(classification_context)
+    recall = true positives / (true positives / false negatives)
+    """
     return recall_score(test_data['fraud_bool'], prediction_data, pos_label=for_class, average='binary')
 
 
