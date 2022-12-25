@@ -137,6 +137,18 @@ def bootstrap_mean_standard_deviation(sample, sub_sample, size: int, iterations:
 
 
 def find_distribution(sample, distributions_consider: list = list()) -> tuple:
+    """
+    Will find the best possible distribution type and its parameters using
+    Maximum Likelihood Estimation. The goodness of fit is calculated using the
+    Kolmogorov-Smirnov test. distributions_consider can be provided with a
+    list of distrbutions (the names of scipy continuous distubtions in string
+    format will suffice:
+    https://docs.scipy.org/doc/scipy/reference/stats.html#continuous-distributions)
+    If none provided the distributions below in distribution_names will be
+    considered. It must be noted it can take a lot of computation if the list
+    is long. The distribution name and its parameters and the KS-statistic and
+    its p-value are returned.
+    """
     distribution_names = ['arcsine', 'alpha', 'beta', 'cosine', 'gamma',
                           'pareto', 'rayleigh', 'norm', 'lognorm', 'expon',
                           'dweibull']
