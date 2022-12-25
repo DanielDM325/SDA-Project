@@ -106,7 +106,7 @@ def spearman_correlation_coefficient(sample_1, sample_2=None):
         return None
 
 
-def bootstrap_mean_standard_deviation(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None):
+def bootstrap_mean_standard_deviation(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None) -> list:
     """
     A bootstrap procedure to test the mean and standard deviation of a
     subsample in relation to a bigger sample of size size. Specific columns
