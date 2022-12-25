@@ -51,6 +51,26 @@ class NaiveBayesClassifier:
 
 class MultiNaiveBayesClassifier:
     def __init__(self, alpha: float = 1.0) -> None:
+    """
+    Like the Naive Bayes classifier from sklearn it uses Bayesian statistics
+    to classify. The Gaussian sklearn version assumes all distributions are
+    distributed according to a Gaussian distribution. This custom
+    implementation does not. It uses the find_distritution function from
+    data_analysis.py (see comments for that function to further understand
+    function) to find the best distribution for every feature. For
+    distributions which are boolean a Bernoulli distribution is used. And for
+    distributions which are categorical the same probility function is used as
+    the one in sklearn:
+    https://scikit-learn.org/stable/modules/naive_bayes.html#categorical-naive-bayes
+    With the same alpha value of 1.0.
+    As a class it works the same as the sklearn version. Simply feed the data
+    X and y into fit and use predict to classify. Except additionaly a list
+    of distributions to consider for finding the best distribution for every
+    relevant feature can be provided when creating the class.
+    It must be noted as with the find_distribution function training this
+    model requires significant more computation than a simple Naive Bayes from
+    sklearn.
+    """
         self.alpha = alpha
         self.P_1 = 0.0
         self.P_0 = 0.0
