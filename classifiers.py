@@ -50,7 +50,6 @@ class NaiveBayesClassifier:
 
 
 class MultiNaiveBayesClassifier:
-    def __init__(self, alpha: float = 1.0) -> None:
     """
     Like the Naive Bayes classifier from sklearn it uses Bayesian statistics
     to classify. The Gaussian sklearn version assumes all distributions are
@@ -71,11 +70,13 @@ class MultiNaiveBayesClassifier:
     model requires significant more computation than a simple Naive Bayes from
     sklearn.
     """
+    def __init__(self, alpha: float = 1.0, distributions_consider: list = list()) -> None:
         self.alpha = alpha
         self.P_1 = 0.0
         self.P_0 = 0.0
         self.distributions_1 = list()
         self.distributions_0 = list()
+        self.distributions_consider = distributions_consider
 
     def fit(self, X, y) -> None:
         X = np.array(X)
@@ -97,9 +98,9 @@ class MultiNaiveBayesClassifier:
                     categorical[value] = ((column == value).sum() + self.alpha) / (column.size + self.alpha * np.unique(column).size)
                 self.distributions_1.append(categorical)
             else:
-                best_distribution = find_distribution(column)
                 print(best_distribution[0])
-                self.distributions_1.append(best_distribution[0], best_distribution[1])
+                best_distribution = find_distribution(column, self.distributions_consider)
+                self.distributions_1.append((best_distribution[0], best_distribution[1]))
         for column in X_0.T:
             print(column)
             if np.unique(column).size == 2:
@@ -113,9 +114,9 @@ class MultiNaiveBayesClassifier:
                     categorical[value] = ((column == value).sum() + self.alpha) / (column.size + self.alpha * np.unique(column).size)
                 self.distributions_0.append(categorical)
             else:
-                best_distribution = find_distribution(column)
                 print(best_distribution[0])
-                self.distributions_0.append(best_distribution[0], best_distribution[1])
+                best_distribution = find_distribution(column, self.distributions_consider)
+                self.distributions_0.append((best_distribution[0], best_distribution[1]))
 
     def predict(self, X) -> np.array:
         predictions = list()
