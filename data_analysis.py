@@ -26,7 +26,6 @@ def epps_singleton_similarity(sample_1, sample_2):
         if list(sample_1.columns.values) != list(sample_2.columns.values):
             return None
         ep_statistics = list()
-        p_values = list()
         for column in sample_1.columns:
             try:
                 ep_statistics.append(stats.epps_singleton_2samp(sample_1[column].values, sample_2[column].values))
