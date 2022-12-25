@@ -86,7 +86,6 @@ class MultiNaiveBayesClassifier:
         X_1 = X[np.argwhere(y).flatten()]
         X_0 = X[np.argwhere(y == 0).flatten()]
         for column in X_1.T:
-            print(column)
             if np.unique(column).size == 2:
                 bernoulli = dict()
                 for value in np.unique(column):
@@ -98,11 +97,9 @@ class MultiNaiveBayesClassifier:
                     categorical[value] = ((column == value).sum() + self.alpha) / (column.size + self.alpha * np.unique(column).size)
                 self.distributions_1.append(categorical)
             else:
-                print(best_distribution[0])
                 best_distribution = find_distribution(column, self.distributions_consider)
                 self.distributions_1.append((best_distribution[0], best_distribution[1]))
         for column in X_0.T:
-            print(column)
             if np.unique(column).size == 2:
                 bernoulli = dict()
                 for value in np.unique(column):
@@ -114,7 +111,6 @@ class MultiNaiveBayesClassifier:
                     categorical[value] = ((column == value).sum() + self.alpha) / (column.size + self.alpha * np.unique(column).size)
                 self.distributions_0.append(categorical)
             else:
-                print(best_distribution[0])
                 best_distribution = find_distribution(column, self.distributions_consider)
                 self.distributions_0.append((best_distribution[0], best_distribution[1]))
 
