@@ -91,6 +91,10 @@ def pearson_correlation_coefficient(sample_1, sample_2=None):
 
 
 def spearman_correlation_coefficient(sample_1, sample_2=None):
+    """
+    Calculates the Spearman correlation. Either inbetween 2 numpy arrays or
+    for all columns in a DataFrame.
+    """
     if type(sample_1) == np.ndarray and type(sample_2) == np.ndarray:
         correlation = stats.spearmanr(sample_1, sample_2)
         return correlation
