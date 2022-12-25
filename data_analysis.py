@@ -96,22 +96,18 @@ def bootstrap_mean_standard_deviation(sample, sub_sample, size: int, iterations:
 
 def find_distribution(sample, distributions_consider: list = list()) -> tuple:
     distribution_names = ['arcsine', 'alpha', 'beta', 'cosine', 'gamma', 'pareto', 'rayleigh', 'norm', 'lognorm', 'expon', 'dweibull']
-    # distribution_names = ['alpha', 'beta', 'cosine', 'gamma', 'pareto', 'rayleigh', 'norm', 'lognorm', 'dweibull']
     if distributions_consider:
         distribution_names = distributions_consider
-    if type(sample) == pd.DataFrame:
-        pass
-    else:
-        mean = np.mean(sample)
-        standard_deviation = np.std(sample)
-        best_parameters = getattr(stats, distribution_names[0]).fit(sample, loc=mean, scale=standard_deviation)
-        best_ks_statistic = stats.kstest(sample, distribution_names[0], args=best_parameters)
-        best_distribition = 0
-        for d, distribution in enumerate(distribution_names[1:]):
-            parameters = getattr(stats, distribution).fit(sample, loc=mean, scale=standard_deviation)
-            ks_statistic = stats.kstest(sample, distribution_names[d + 1], args=parameters)
-            if ks_statistic[0] < best_ks_statistic[0]:
-                best_ks_statistic = ks_statistic
-                best_parameters = parameters
-                best_distribition = d + 1
-        return distribution_names[best_distribition], best_parameters, best_ks_statistic
+    mean = np.mean(sample)
+    standard_deviation = np.std(sample)
+    best_parameters = getattr(stats, distribution_names[0]).fit(sample, loc=mean, scale=standard_deviation)
+    best_ks_statistic = stats.kstest(sample, distribution_names[0], args=best_parameters)
+    best_distribition = 0
+    for d, distribution in enumerate(distribution_names[1:]):
+        parameters = getattr(stats, distribution).fit(sample, loc=mean, scale=standard_deviation)
+        ks_statistic = stats.kstest(sample, distribution_names[d + 1], args=parameters)
+        if ks_statistic[0] < best_ks_statistic[0]:
+            best_ks_statistic = ks_statistic
+            best_parameters = parameters
+            best_distribition = d + 1
+    return distribution_names[best_distribition], best_parameters, best_ks_statistic
