@@ -28,6 +28,15 @@ def kolmogorov_smirnov_similarity(sample_1, sample_2):
 
 
 def epps_singleton_similarity(sample_1, sample_2):
+    """
+    Uses the Epps-Singleton test to calculate similarity between two data
+    samples. This function either accepts 2 numpy arrays for which it will
+    calculate the ES statistic and p-value or two pandas DataFrames with the
+    same columns for which it will calculate the ES statistic and p-value for
+    every column. Look up
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.epps_singleton_2samp.html
+    to understand the KS statistic and p-value.
+    """
     if type(sample_1) == np.ndarray and type(sample_2) == np.ndarray:
         ep_statistic = stats.epps_singleton_2samp(sample_1, sample_2)
         return ep_statistic
