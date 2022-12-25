@@ -55,6 +55,10 @@ def epps_singleton_similarity(sample_1, sample_2):
 
 
 def cross_correlate(a, v):
+    """
+    Calculates the cross correlation for a and v. This will serve as a
+    function for the pandas corr method as argument.
+    """
     return np.correlate(a, v)[0]
 
 
