@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 
-def kolmogorov_smirnov_similarity(sample_1, sample_2) -> float:
+def kolmogorov_smirnov_similarity(sample_1, sample_2):
     if type(sample_1) == np.ndarray and type(sample_2) == np.ndarray:
         ks_statistic = stats.ks_2samp(sample_1, sample_2)
         return ks_statistic
