@@ -27,6 +27,13 @@ class LogisticRegressionClassifier:
 
 
 class NaiveBayesClassifier:
+    """
+    A Naive Bayes classifier based on the module in sklearn:
+    https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html#sklearn.naive_bayes.GaussianNB
+    Simply feed the data X and y into the fit method and predict using the predict method.
+    It uses a Gaussian distribution to estimate features irregardless if these
+    features are Gaussian or not.
+    """
     def __init__(self) -> None:
         self.model = GaussianNB()
 
