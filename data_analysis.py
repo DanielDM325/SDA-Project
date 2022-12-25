@@ -107,9 +107,16 @@ def spearman_correlation_coefficient(sample_1, sample_2=None):
 
 
 def bootstrap_mean_standard_deviation(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None):
+    """
+    A bootstrap procedure to test the mean and standard deviation of a
+    subsample in relation to a bigger sample of size size. Specific columns
+    can be either included or excluded. If none provided all columns will be
+    included. Number of iterations can be provided for the amount of bootstrap
+    samples generated. It will calculate p-values and also return bootstrapped
+    means and standard deviations so a histogram can be plotted. The p-value
+    is two-tailed.
+    """
     statistics = list()
-    # Select all rows for specified columns in columns_exclude, columns_include
-    # or all columns if neither are specified.
     for column in sample.loc[:, ~sample.columns.isin(columns_exclude)].columns if columns_exclude else columns_include if columns_include else sample.columns:
         main_mean = sub_sample[column].mean()
         main_standard_deviations = sub_sample[column].std()
