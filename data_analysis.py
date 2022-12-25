@@ -71,7 +71,7 @@ def spearman_correlation_coefficient(sample_1, sample_2=None):
         return None
 
 
-def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None):
+def bootstrap_mean_standard_deviation(sample, sub_sample, size: int, iterations: int = 10000, columns_include=None, columns_exclude=None):
     statistics = list()
     # Select all rows for specified columns in columns_exclude, columns_include
     # or all columns if neither are specified.
@@ -88,8 +88,8 @@ def bootstrap_temp(sample, sub_sample, size: int, iterations: int = 10000, colum
         standard_deviations = np.array(standard_deviations)
         smaller_mean = True if main_mean < means.mean() else False
         smaller_standard_deviation = True if main_standard_deviations < standard_deviations.mean() else False
-        p_value_mean = (np.count_nonzero(means < main_mean) if smaller_mean else np.count_nonzero(means > main_mean)) / iterations
-        p_value_standard_deviation = (np.count_nonzero(standard_deviations < main_standard_deviations) if smaller_standard_deviation else np.count_nonzero(standard_deviations > main_standard_deviations)) / iterations
+        p_value_mean = ((np.count_nonzero(means < main_mean) if smaller_mean else np.count_nonzero(means > main_mean)) / iterations) * 2
+        p_value_standard_deviation = ((np.count_nonzero(standard_deviations < main_standard_deviations) if smaller_standard_deviation else np.count_nonzero(standard_deviations > main_standard_deviations)) / iterations) * 2
         statistics.append((column, means, standard_deviations, p_value_mean, p_value_standard_deviation))
     return statistics
 
