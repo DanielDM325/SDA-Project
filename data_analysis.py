@@ -63,6 +63,10 @@ def cross_correlate(a, v):
 
 
 def cross_correlation_coefficient(sample_1, sample_2=None):
+    """
+    Calculates the cross correlation. Either inbetween 2 numpy arrays or for
+    all columns in a DataFrame.
+    """
     if type(sample_1) == np.ndarray and type(sample_2) == np.ndarray:
         correlation = np.correlate(sample_1, sample_2)
         return correlation
